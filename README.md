@@ -3,7 +3,14 @@ GIS random network
 
 GIS - graphs and networks
 
-Generating random networks random
+Generating random networks
+
+* Random network
+* Random Euclidean network
+* Random scale-free network
+* Random small-world network
+
+User interface in Polish language.
 
 ### Requirements
 
