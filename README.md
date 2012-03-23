@@ -10,7 +10,7 @@ Generating random networks
 * Random scale-free network
 * Random small-world network
 
-User interface in Polish language.
+User interface in Polish language-.
 
 ### Requirements
 
@@ -29,4 +29,5 @@ User interface in Polish language.
 ### License
 
 http://creativecommons.org/licenses/by-sa/2.0/legalcode
+
 http://creativecommons.org/licenses/by-sa/2.0/
