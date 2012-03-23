@@ -1,0 +1,29 @@
+<html>
+<head>
+	<title>GIS</title>
+	<script type="text/javascript" src="../jquery-1.7.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function(){
+		$('#submit').click(function(){
+			$.ajax({
+				url: "/graf/"+$('select :selected')[0].value+"/100",
+				context: document.body,
+				success: function(data, textStatus){
+					$("#graf").html('<img src="/graf.jpeg" width=500 height=500/>');
+				}
+			});
+		});
+	});
+</script>
+<body>
+	<select name="typ-sieci">
+		<option value="losowa" >Sieć losowa</option>
+		<option value="euklides">Sieć euklidesowa</option>
+		<option value="bezskalowa">Sieć bezskalowa</option>
+		<option value="maly-swiat">Sieć małego-świata</option>
+	</select>
+	<input id="submit" type="submit"/>
+	<div id="graf"></div>
+</body>
+</html>
