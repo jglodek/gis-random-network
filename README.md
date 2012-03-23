@@ -1,16 +1,25 @@
 GIS random network
 ==================
 
-### dziala
+GIS - graphs and networks
 
-tekst
+Generating random networks random
 
+### Requirements
 
+	Ruby 1.9.3
+	Ruby Gems
 
-	def a(x)
-		#zrob costam
-	end
+	gem install sinatra
+	gem install ruby-graphviz
+	gem install erb
+### Usage
 
-tekst
+	ruby grapviz.rb
 
-###
+	open web browser at http://localhost:4567/
+
+### License
+
+http://creativecommons.org/licenses/by-sa/2.0/legalcode
+http://creativecommons.org/licenses/by-sa/2.0/
