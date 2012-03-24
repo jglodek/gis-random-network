@@ -6,24 +6,61 @@
 <script>
 	$(document).ready(function(){
 		$('#submit').click(function(){
+			var myurl = '/graf'+
+				 "?graph_type="+$('select :selected').val() +
+				 "&node_num="+$('#node_num').val()+
+				 "&mean_degree="+$('#degree').val()+
+				 "&beta="+$('#beta').val();
+
 			$.ajax({
-				url: "/graf/"+$('select :selected')[0].value+"/100",
+				url: myurl,
 				context: document.body,
 				success: function(data, textStatus){
-					$("#graf").html('<img src="/graf.jpeg" width=500 height=500/>');
+					$("#graf").html('<img id="graf" src="/graf.jpeg"/>');
+					$("#result").html(data);
 				}
 			});
 		});
 	});
 </script>
+<style type="text/css">
+#graf{
+	z-index:-1;
+	position:absolute;
+	top:20px;
+	left:0p;
+	max-width:500px;
+	max-height:500px;
+}
+#kontrolki{
+	float:right;
+}
+</style>
 <body>
-	<select name="typ-sieci">
-		<option value="losowa" >Sieć losowa</option>
-		<option value="euklides">Sieć euklidesowa</option>
-		<option value="bezskalowa">Sieć bezskalowa</option>
-		<option value="maly-swiat">Sieć małego-świata</option>
-	</select>
-	<input id="submit" type="submit"/>
-	<div id="graf"></div>
+	<div id="kontrolki">
+		<div>
+			<select name="typ-sieci">
+				<option value="losowa" >Random Network</option>
+				<option value="euklides">Euclidean Network</option>
+				<option value="bezskalowa">Scale-free Network</option>
+				<option value="maly-swiat">Small World Network</option>
+			</select>
+		</div>
+		<div>
+			nodes number <input id="node_num" type="number" value="100">
+		</div>
+		<div>
+			mean degree <input id="degree" type="number" value="4">
+		</div>
+		<div>
+			beta <input id="beta" type="number" value="0.01">
+		</div>
+		<input id="submit" type="submit"/>
+		<p id="result">
+
+		</p>
+	</div>
+	<div id="graf">
+	</div>
 </body>
 </html>

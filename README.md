@@ -20,11 +20,20 @@ User interface in Polish language-.
 	gem install sinatra
 	gem install ruby-graphviz
 	gem install erb
+
+for development autoreload
+
+	gem install shotgun
+
 ### Usage
 
 	ruby grapviz.rb
-
 	open web browser at http://localhost:4567/
+
+or for development:
+
+	shotgun grapviz.rb
+	open web browser at http://localhost:9393/
 
 ### License
 

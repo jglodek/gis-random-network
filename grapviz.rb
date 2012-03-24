@@ -10,57 +10,96 @@ get '/jquery-1.7.1.min.js' do
   File.read('jquery-1.7.1.min.js')
 end
 
-get '/graf/:rodzaj/:ilosc' do
-
-	rodzaj = params[:rodzaj]
-	ilosc = params[:ilosc].to_i
-	sredni_stopien_wierzcholka = 3
-	beta = 0.01
-
+get '/graf' do
+	graph_type = params[:graph_type]
+	node_num = params[:node_num].to_i
+	mean_degree = params[:mean_degree].to_f
+	beta = params[:beta].to_f
 	# Create a new graph
-	g = GraphViz.new( :G,:use=> "twopi",:scale=>0.1, :type => :graph )
+	g = GraphViz.new( :G,:use=>"neato", :type => :graph )
 
-	case params[:rodzaj]
+	#wierzcholki
+	nodes = Array.new
+	for i in 0...node_num do
+		nod = g.add_nodes( "n#{i}")
+		nod["shape"] = "point"
+		nodes.push nod
+	end
+
+	#tablica na krawedzie
+	edges = Array.new
+
+	case params[:graph_type]
 	when "losowa"
-		nodes = Array.new
-		for i in 0...ilosc do
-			x = g.add_nodes("nod#{i}")
-			x.set{|at| at.shape="point"}
-			nodes.push x
-		end
-		ilosc_krawedzi = sredni_stopien_wierzcholka*ilosc/2
-		for i in 0...ilosc_krawedzi do
-			g.add_edges(nodes[rand(ilosc)], nodes[rand(ilosc)])
+		for i in 0...node_num
+
 		end
 	when "euklides"
 	when "bezskalowa"
-		nodes = Hash.new
-		nodes[0]=g.add_nodes("nod0")
-		nodes[0]["shape"]="point"
-		for i in 1...ilosc do
-			nodes[i]=g.add_nodes("nod #{i}")
+		step = beta-1
+		count = 0
+		for i in 1...node_num do
 			g.add_edges(nodes[i], nodes[rand(i)])
-			nodes[i].set{|n| n.shape="point"}
+			count+=step
+			while count>1
+				g.add_edges(nodes[i], nodes[rand(i)])
+				count-=1
+			end
 		end
 	when "maly-swiat" #http://en.wikipedia.org/wiki/Watts_and_Strogatz_Model
-		#ring lattice
-		nodes = Array.new
-		nodes.push g.add_nodes("nod0")
-		for i in 1...ilosc do
-			nodes.push g.add_nodes("nod#{i}")
-			g.add_edges(nodes[i], nodes[i-1])
+		#polaczenia ring-latice
+		step = mean_degree.to_f/2.0
+		count = 0
+		for i in 0...node_num do
+			count+=step
+			k = 1
+			while count>1
+				count-=1
+				edges.push [nodes[i], nodes[(i-k)%node_num]]
+				k+=1
+			end
 		end
-		g.add_edges(nodes[0],nodes[ilosc-1])
+		#rewiring
+		edges.each do |e|
+			if rand < beta
+				wybor = rand(node_num)
+				e[1] = nodes[wybor]
+			end
+		end
+	end
+
+	#czyszczenie podwojnych krawedzi
+	final_edges = edges
+	edges.each do |e|
+		#petla
+		if e[0]==e[1]
+			final_edges = final_edges - [e]
+		else
+			edges.each do |f|
+				if e!=f
+					#taka sama
+					if e[0]==f[0] && e[1] == f[1]
+						final_edges = final_edges - [f]
+					end
+					#odwrotna
+					if e[0]==f[1] && e[1] ==f[0]
+						final_edges = final_edges - [f]
+					end
+				end
+			end
+		end
+	end
+
+	#krawedzie
+	final_edges.each do |e|
+		g.add_edges(e[0],e[1])
 	end
 
 	# Generate output image
 	g.output( :jpeg => "graf.jpeg")
-
+	return erb :stats
 end
 
 get '/graf.jpeg' do
   File.read('graf.jpeg')
 end
-
-
-
