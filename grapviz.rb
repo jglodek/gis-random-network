@@ -39,10 +39,10 @@ get '/graf' do
 		step = beta-1
 		count = 0
 		for i in 1...node_num do
-			g.add_edges(nodes[i], nodes[rand(i)])
+			edges.push [nodes[i], nodes[rand(i)]]
 			count+=step
 			while count>1
-				g.add_edges(nodes[i], nodes[rand(i)])
+				edges.push [nodes[i], nodes[rand(i)]]
 				count-=1
 			end
 		end
