@@ -10,9 +10,12 @@
 				 "?graph_type="+$('select :selected').val() +
 				 "&node_num="+$('#node_num').val()+
 				 "&mean_degree="+$('#degree').val()+
-				 "&beta="+$('#degree').val();
+				 "&beta="+$('#beta').val();
 			if($('#neighbourhood:checked').val() != undefined){
 				myurl +="&neighbourhood=1"
+			}
+			if($('#showedges:checked').val() != undefined){
+				myurl +="&showedges=1"
 			}
 			var drawGraph=false;
 			if($('#drawgraph:checked').val() != undefined)
@@ -71,6 +74,7 @@
 		</div>
 		<input id ="neighbourhood" type="checkbox" name="neigbourhood" value="1" /> Neighbourhood matrix<br />
 		<input id ="drawgraph" type="checkbox" name="drawgraph" value="1" /> Draw graph<br />
+		<input id ="showedges" type="checkbox" name="showedges" value="1" /> List edges<br />
 
 		<input id="submit" type="submit"/>
 	</div>

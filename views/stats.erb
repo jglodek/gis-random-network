@@ -1,3 +1,8 @@
+<p><%=params%></p>
+<p>Number of nodes: <%=@nodes.length%></p>
+<p>Number of edges: <%=@final_edges.length%></p>
+<p>Mean degree: <%=@final_edges.length.to_f*2/@nodes.length.to_f%></p>
+<p>Degree distribution: <%=@deg_dist%></p>
 <% if @neighbourhood %>
 	<table style="font-size:0.5em;">
 		<caption><em>Neighbourhood matrix</em></caption>
@@ -21,3 +26,5 @@
 		<% end %>
 	</table>
 <% end %>
+
+<p> <%= ("Edges list: " + @final_edges.to_s) if @showedges %></p>

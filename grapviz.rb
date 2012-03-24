@@ -3,6 +3,7 @@ require 'sinatra'
 require 'erb'
 
 get '/' do
+	#wyswietlenie views/nowy.erb
 	return erb :nowy
 end
 
@@ -20,8 +21,7 @@ get '/graf' do
 
 	@drawgraph = params[:drawgraph]
 	@neighbourhood = params[:neighbourhood]
-	# Create a new graph
-	g = GraphViz.new( :G,:use=>"neato", :type => :graph )
+	@showedges = params[:showedges]
 
 	#wierzcholki
 	@nodes = Array.new
@@ -76,9 +76,12 @@ get '/graf' do
 		e.sort!
 	end
 	@final_edges = @edges.uniq
+	#czyszczenie petli
+	@final_edges.delete_if{|e| e[0]==e[1]}
 
-	#Rysowanie grafu
+	#Rysowanie grafu GRAPHVIZ
 	if @drawgraph
+		g = GraphViz.new( :G,:use=>"neato", :type => :graph )
 		#wierzcholki graphviz
 		@gv_nodes = Array.new
 		@nodes.each do |n|
@@ -94,6 +97,21 @@ get '/graf' do
 		g.output( :jpeg => "graf.jpeg")
 	end
 
+	#obliczanie rozkladu stopni
+	node_degrees = Array.new
+	@deg_dist = Hash.new
+	flat = @final_edges.flatten
+	for i in 0...@nodes.length
+		node_degrees.push flat.count(i)
+	end
+	degrees = node_degrees.uniq
+	degrees.sort!
+	degrees.reverse!
+	degrees.each do |d|
+		@deg_dist[d] = node_degrees.count(d)
+	end
+
+	#wyswietlenie wynikow z pliku views/stats.erb
 	return erb :stats
 end
 
