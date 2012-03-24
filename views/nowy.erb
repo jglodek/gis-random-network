@@ -10,13 +10,26 @@
 				 "?graph_type="+$('select :selected').val() +
 				 "&node_num="+$('#node_num').val()+
 				 "&mean_degree="+$('#degree').val()+
-				 "&beta="+$('#beta').val();
-
+				 "&beta="+$('#degree').val();
+			if($('#neighbourhood:checked').val() != undefined){
+				myurl +="&neighbourhood=1"
+			}
+			var drawGraph=false;
+			if($('#drawgraph:checked').val() != undefined)
+			{
+				var drawGraph=true;
+				myurl +="&drawgraph=1"
+			}
 			$.ajax({
 				url: myurl,
 				context: document.body,
 				success: function(data, textStatus){
-					$("#graf").html('<img id="graf" src="/graf.jpeg"/>');
+					if(drawGraph){
+						$("#graf").html('<img id="graf" src="/graf.jpeg"/>');
+					}else{
+						$("#graf").html("");
+					}
+
 					$("#result").html(data);
 				}
 			});
@@ -27,11 +40,12 @@
 #graf{
 	z-index:-1;
 	position:absolute;
-	top:20px;
+	top:0px;
 	left:0p;
 	max-width:500px;
 	max-height:500px;
 }
+#result{position:absolute;top:500px;}
 #kontrolki{
 	float:right;
 }
@@ -55,12 +69,14 @@
 		<div>
 			beta <input id="beta" type="number" value="0.01">
 		</div>
-		<input id="submit" type="submit"/>
-		<p id="result">
+		<input id ="neighbourhood" type="checkbox" name="neigbourhood" value="1" /> Neighbourhood matrix<br />
+		<input id ="drawgraph" type="checkbox" name="drawgraph" value="1" /> Draw graph<br />
 
-		</p>
+		<input id="submit" type="submit"/>
 	</div>
 	<div id="graf">
+	</div>
+	<div id="result">
 	</div>
 </body>
 </html>

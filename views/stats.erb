@@ -1,0 +1,23 @@
+<% if @neighbourhood %>
+	<table style="font-size:0.5em;">
+		<caption><em>Neighbourhood matrix</em></caption>
+		<tr>
+			<th>*<th>
+			<% for i in 0..@nodes.length do %>
+				<th><%=i%></th>
+			<% end %>
+		</tr>
+		<% for i in 0..@nodes.length do%>
+		<tr>
+			<th><%=i%><th>
+			<% for j in 0..@nodes.length do%>
+				<% exists = @final_edges.include?([i,j]) || @final_edges.include?([j,i]) %>
+				<td>
+					<%= "1" if exists %>
+					<%= "0" if not exists %>
+				</td>
+			<% end %>
+		</tr>
+		<% end %>
+	</table>
+<% end %>
