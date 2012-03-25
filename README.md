@@ -10,8 +10,6 @@ Generating random networks
 * Random scale-free network
 * Random small-world network
 
-User interface in Polish language-.
-
 ### Requirements
 
 	Ruby 1.9.3
