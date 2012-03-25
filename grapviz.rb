@@ -18,7 +18,7 @@ get '/graf' do
 	node_num = params[:node_num].to_i
 	mean_degree = params[:mean_degree].to_f
 	beta = params[:beta].to_f
-
+	draw_engine = params[:draw_engine]
 	@drawgraph = params[:drawgraph]
 	@neighbourhood = params[:neighbourhood]
 	@showedges = params[:showedges]
@@ -34,10 +34,18 @@ get '/graf' do
 
 	case params[:graph_type]
 	when "losowa"
+		probability = mean_degree/node_num
 		for i in 0...node_num
-
+			for j in i+1...node_num
+				@edges.push [i,j] if rand<probability
+			end
 		end
 	when "euklides"
+		positions = Array.new
+		for i in 0...node_num
+			positions.push [rand, rand]
+		end
+
 	when "bezskalowa"
 		step = beta
 		count = 0
@@ -81,7 +89,7 @@ get '/graf' do
 
 	#Rysowanie grafu GRAPHVIZ
 	if @drawgraph
-		g = GraphViz.new( :G,:use=>"neato", :type => :graph )
+		g = GraphViz.new( :G,:use=>draw_engine, :type => :graph )
 		#wierzcholki graphviz
 		@gv_nodes = Array.new
 		@nodes.each do |n|

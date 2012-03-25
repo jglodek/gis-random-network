@@ -7,7 +7,8 @@
 	$(document).ready(function(){
 		$('#submit').click(function(){
 			var myurl = '/graf'+
-				 "?graph_type="+$('select :selected').val() +
+				 "?graph_type="+$('#typ-sieci :selected').val() +
+				 "&draw_engine="+$('#draw_engine :selected').val()+
 				 "&node_num="+$('#node_num').val()+
 				 "&mean_degree="+$('#degree').val()+
 				 "&beta="+$('#beta').val();
@@ -56,7 +57,7 @@
 <body>
 	<div id="kontrolki">
 		<div>
-			<select name="typ-sieci">
+			<select id="typ-sieci" name="typ-sieci">
 				<option value="losowa" >Random Network</option>
 				<option value="euklides">Euclidean Network</option>
 				<option value="bezskalowa">Scale-free Network</option>
@@ -73,7 +74,14 @@
 			beta <input id="beta" type="number" value="0.01">
 		</div>
 		<input id ="neighbourhood" type="checkbox" name="neigbourhood" value="1" /> Neighbourhood matrix<br />
-		<input id ="drawgraph" type="checkbox" name="drawgraph" value="1" /> Draw graph<br />
+		<div>
+			<input id ="drawgraph" type="checkbox" name="drawgraph" value="1" /> Draw graph
+			<select id="draw_engine" name="rysowanie">
+				<option value="neato" >neato</option>
+				<option value="twopi" >twopi</option>
+				<option value="circo">circo</option>
+			</select>
+		</div>
 		<input id ="showedges" type="checkbox" name="showedges" value="1" /> List edges<br />
 
 		<input id="submit" type="submit"/>
