@@ -34,6 +34,7 @@ get '/graf' do
 
 	case params[:graph_type]
 	when "losowa"
+		#prawdopodobienstwo istnienia krawedzi miedzy dwoma wierzcholkami
 		probability = mean_degree/node_num
 		for i in 0...node_num
 			for j in i+1...node_num
@@ -41,11 +42,12 @@ get '/graf' do
 			end
 		end
 	when "euklides"
+		#nalezy uwzglednic wagi!
 		positions = Array.new
 		for i in 0...node_num
 			positions.push [rand, rand]
+			#TODO
 		end
-
 	when "bezskalowa"
 		step = beta
 		count = 0
@@ -114,7 +116,6 @@ get '/graf' do
 	end
 	degrees = node_degrees.uniq
 	degrees.sort!
-	degrees.reverse!
 	degrees.each do |d|
 		@deg_dist[d] = node_degrees.count(d)
 	end

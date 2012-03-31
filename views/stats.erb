@@ -2,25 +2,36 @@
 <p>Number of nodes: <%=@nodes.length%></p>
 <p>Number of edges: <%=@final_edges.length%></p>
 <p>Mean degree: <%=@final_edges.length.to_f*2/@nodes.length.to_f%></p>
-<p>Degree distribution: <%=@deg_dist%></p>
+<table>
+<caption>Degree distribution</caption>
+	<tr>
+		<th>Degree</th>
+		<th>Count</th>
+	</tr>
+<% @deg_dist.each do |k,v|%>
+	<tr>
+		<td><%=k%></td>
+		<td><%=v%></td>
+	</tr>
+<% end %>
+</table>
+
 <% if @neighbourhood %>
 	<table style="font-size:0.5em;">
 		<caption><em>Neighbourhood matrix</em></caption>
 		<tr>
 			<th>*<th>
-			<% for i in 0..@nodes.length do %>
+			<% for i in 0...@nodes.length do %>
 				<th><%=i%></th>
 			<% end %>
 		</tr>
-		<% for i in 0..@nodes.length do%>
+		<% for i in 0...@nodes.length do%>
 		<tr>
 			<th><%=i%><th>
-			<% for j in 0..@nodes.length do%>
+			<% for j in 0...@nodes.length do%>
 				<% exists = @final_edges.include?([i,j]) || @final_edges.include?([j,i]) %>
-				<td>
-					<%= "1" if exists %>
-					<%= "0" if not exists %>
-				</td>
+					<%= "<td class='one'>1</td>" if exists %>
+					<%= "<td>0</td>" if not exists %>
 			<% end %>
 		</tr>
 		<% end %>
