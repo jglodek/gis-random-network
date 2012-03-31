@@ -5,10 +5,10 @@ GIS - graphs and networks
 
 Generating random networks
 
-* Random network
-* Random Euclidean network
-* Random scale-free network
-* Random small-world network
+* Random network - Erdős–Rényi model
+* Random Euclidean network - network of ⟨0,1⟩∗⟨0,1⟩ ∈ R² points, connected if close enough (radius parameter)
+* Random scale-free network - modified Barabási–Albert model
+* Random small-world network - Watts-Strogatz model
 
 ### Requirements
 
