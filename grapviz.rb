@@ -35,18 +35,27 @@ get '/graf' do
 	case params[:graph_type]
 	when "losowa"
 		#prawdopodobienstwo istnienia krawedzi miedzy dwoma wierzcholkami
-		probability = mean_degree/node_num
+		probability = beta
 		for i in 0...node_num
 			for j in i+1...node_num
 				@edges.push [i,j] if rand<probability
 			end
 		end
 	when "euklides"
-		#nalezy uwzglednic wagi!
-		positions = Array.new
+		r_test = beta*beta
+		pos = Array.new
 		for i in 0...node_num
-			positions.push [rand, rand]
-			#TODO
+			pos.push [rand, rand]
+		end
+		for i in 0...node_num
+			for j in i+1...node_num
+				a = (pos[i][0]-pos[j][0])
+				b = (pos[i][1]-pos[j][1])
+				dist = a*a+b*b
+				if dist < r_test
+					@edges.push [i,j]
+				end
+			end
 		end
 	when "bezskalowa"
 		step = beta
