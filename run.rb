@@ -2,7 +2,7 @@ require 'graphviz'
 require 'sinatra'
 require 'erb'
 
-require './jggraph.rb'
+require './lib/jggraph.rb'
 
 get '/' do
 	#wyswietlenie views/nowy.erb
@@ -10,7 +10,7 @@ get '/' do
 end
 
 get '/jquery-1.7.1.min.js' do
-  File.read('jquery-1.7.1.min.js')
+  File.read('./views/jquery-1.7.1.min.js')
 end
 
 get '/graf' do
@@ -55,7 +55,7 @@ get '/graf' do
 			g.add_edges(@gv_nodes[e[0]],@gv_nodes[e[1]])
 		end
 		# rysowanie
-		g.output( :jpeg => "graf.jpeg")
+		g.output( :jpeg => "./views/graf.jpeg")
 	end
 
 	#obliczanie rozkladu stopni
@@ -66,5 +66,5 @@ get '/graf' do
 end
 
 get '/graf.jpeg' do
-  File.read('graf.jpeg')
+  File.read('./views/graf.jpeg')
 end
