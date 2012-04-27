@@ -1,7 +1,6 @@
-<p><%=params%></p>
-<p>Number of nodes: <%=@nodes.length%></p>
-<p>Number of edges: <%=@final_edges.length%></p>
-<p>Mean degree: <%=@final_edges.length.to_f*2/@nodes.length.to_f%></p>
+<p>Number of nodes: <%=@jggraph.nodes.length%></p>
+<p>Number of edges: <%=@jggraph.edges.length%></p>
+<p>Mean degree: <%=@jggraph.edges.length.to_f*2/@jggraph.nodes.length.to_f%></p>
 <table>
 <caption>Degree distribution</caption>
 	<tr>
@@ -21,15 +20,15 @@
 		<caption><em>Neighbourhood matrix</em></caption>
 		<tr>
 			<th>*<th>
-			<% for i in 0...@nodes.length do %>
+			<% for i in 0...@jggraph.nodes.length do %>
 				<th><%=i%></th>
 			<% end %>
 		</tr>
-		<% for i in 0...@nodes.length do%>
+		<% for i in 0...@jggraph.nodes.length do%>
 		<tr>
 			<th><%=i%><th>
-			<% for j in 0...@nodes.length do%>
-				<% exists = @final_edges.include?([i,j]) || @final_edges.include?([j,i]) %>
+			<% for j in 0...@jggraph.nodes.length do%>
+				<% exists = @jggraph.edges.include?([i,j]) || @jggraph.edges.include?([j,i]) %>
 					<%= "<td class='one'>1</td>" if exists %>
 					<%= "<td>0</td>" if not exists %>
 			<% end %>
@@ -38,4 +37,4 @@
 	</table>
 <% end %>
 
-<p> <%= ("Edges list: " + @final_edges.to_s) if @showedges %></p>
+<p> <%= ("Edges list: " + @jggraph.edges.to_s) if @showedges %></p>
