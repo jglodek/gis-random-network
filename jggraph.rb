@@ -1,7 +1,6 @@
 class JGGraph
 	attr_accessor :nodes, :edges
 
-
 	def initialize(nodes_number)
 		#wierzcholki
 		@nodes = Array.new
