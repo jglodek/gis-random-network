@@ -2,7 +2,7 @@ require 'graphviz'
 require 'sinatra'
 require 'erb'
 
-require './lib/jggraph.rb'
+require './jggraph.rb'
 
 get '/' do
 	#wyswietlenie views/nowy.erb
