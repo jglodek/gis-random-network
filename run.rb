@@ -25,17 +25,17 @@ get '/graf' do
 	@neighbourhood = params[:neighbourhood]
 	@showedges = params[:showedges]
 
-	@jggraph = JGGraph.new(node_num)
+	@jggraph = JGGraph.new()
 
 	case params[:graph_type]
 	when "losowa"
-		@jggraph.generate_network :random, :edge_probability=> beta.to_f
+		@jggraph.generate_network :random,:node_count=>node_num, :edge_probability=> beta.to_f
 	when "euklides"
-		@jggraph.generate_network :euclidean, :radius=> beta.to_f
+		@jggraph.generate_network :euclidean,:node_count=>node_num, :radius=> beta.to_f
 	when "bezskalowa"
-		@jggraph.generate_network :scale_free, :node_degree_increment_step => beta.to_f
+		@jggraph.generate_network :scale_free,:node_count=>node_num, :node_degree_increment_step => beta.to_f
 	when "maly-swiat" #http://en.wikipedia.org/wiki/Watts_and_Strogatz_Model
-		@jggraph.generate_network :small_world, :mean_degree => mean_degree, :rewiring_probability => beta.to_f
+		@jggraph.generate_network :small_world,:node_count=>node_num, :mean_degree => mean_degree, :rewiring_probability => beta.to_f
 	end
 	#czyszczenie grafu z wielokrotnych krawędzi i pętli
 	@jggraph.clean_up
@@ -44,10 +44,10 @@ get '/graf' do
 	if @drawgraph
 		g = GraphViz.new( :G,:use=>draw_engine, :type => :graph )
 		#wierzcholki graphviz
-		@gv_nodes = Array.new
+		@gv_nodes = Hash.new
 		@jggraph.nodes.each do |n|
 			nod = g.add_nodes( "#{n}" )
-			@gv_nodes.push nod
+			@gv_nodes[n] = nod
 			nod["shape"] = "point"
 		end
 		#krawedzie graphviz
