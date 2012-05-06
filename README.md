@@ -28,7 +28,7 @@ for development autoreload and tests
 
 for generator app:
 
-	ruby grapviz.rb
+	ruby run.rb
 	open web browser at http://localhost:4567/
 
 for lib:
@@ -72,10 +72,14 @@ for lib:
 	#list of edges
 	g.edges
 
-or for development:
+or for development of frontend:
 
-	shotgun grapviz.rb
+	shotgun run.rb
 	open web browser at http://localhost:9393/
+
+or for testing (rspec!) and development of library:
+
+	ruby test/jggraph-test.rb
 
 ### License
 
